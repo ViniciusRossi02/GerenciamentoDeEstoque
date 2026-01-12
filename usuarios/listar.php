@@ -49,7 +49,8 @@
                                <td><?= $usuario["id"] ?></td>
                                <td><?= $usuario["nome"] ?></td>
                                <td><?= $usuario["email"] ?></td>
-                               <td><a class="btn btn-warning btn-sm" href="editar.php"><i class="bi bi-pencil-square"></i> Editar</a></td>
+                               <td><a class="btn btn-warning btn-sm" 
+                               href="editar.php?id=<?= $usuario['id']?>"><i class="bi bi-pencil-square"></i> Editar</a></td>
                                <td><a class="btn btn-danger btn-sm" href="excluir.php"><i class="bi bi-trash"></i> Excluir</a></td>
                           </tr>
                      <?php endforeach; ?>
