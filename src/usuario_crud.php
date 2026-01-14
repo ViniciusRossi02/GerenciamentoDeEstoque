@@ -37,3 +37,18 @@ function buscarUsuarioPorId(PDO $conexao, int $id): ?array
     $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
     return $resultado ?: null; 
 }
+
+function atualizarUsuario(PDO $conexao, int $id, string $nome, string $email, string $senha): void
+{
+    $sql = "UPDATE usuarios SET nome = :nome, email = :email, senha = :senha
+            WHERE id = :id";
+
+            $consulta = $conexao->prepare($sql);
+
+            $consulta->bindValue(":nome", $nome, PDO::PARAM_STR);
+            $consulta->bindValue(":email", $email, PDO::PARAM_STR);
+            $consulta->bindValue(":senha", $senha, PDO::PARAM_STR);
+            $consulta->bindValue(":id", $id, PDO::PARAM_INT);
+
+            $consulta -> execute();
+}

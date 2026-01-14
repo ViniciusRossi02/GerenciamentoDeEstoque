@@ -20,6 +20,41 @@
           $erro = "Erro ao buscar usuário <br>" . $e->getMessage();
      }
 
+     //  CAPTURAR E SANITIZAR OS DADOS DO FORMULARIO
+     if($_SERVER['REQUEST_METHOD'] === 'POST'){
+          $nome = sanitizar($_POST['nome']);
+          $email = sanitizar($_POST['email'], 'email');
+          $senhaForm = $_POST['senha']; 
+
+     // VALIDAÇÃO SE OS CAMPOS FORAM PREENCHIDOS
+     if(empty($nome) || empty($email)){
+          $erro = "Nome e e-mail são obrigatórios";
+     }else {
+          try {
+          // Definição da senha (vazio? manter a existente; digitou: é igual? manter; é diferente? codificar a nova senha)
+          // se senha vazia, mantem a anterios que esta salva no banco de dados; Função no utils
+          $senhaVerificada = empty($senhaForm) ? 
+          $usuario['senha'] : 
+          verificarSenha($senhaForm,$usuario['senha']);
+     
+          // executar o update no banco
+          atualizarUsuario($conexao, $id, $nome, $email, $senhaVerificada);
+
+          // reedirecionar para a página de listar
+          header("location: listar.php");
+          exit;
+
+          } catch (Throwable $e) {
+               if($e->getCode() === "23000"){
+                    $erro = "E-mail já cadastrado. Por Favor, use outro e-mail.";
+               }else {   
+                    $erro = "Erro ao atualizar o usuario: <br>" .$e->getMessage();
+               }
+          }
+          
+     }
+     }
+
      $titulo = "Editar Usuário |";
      require_once BASE_PATH . "/includes/cabecalho.php";
      ?>
@@ -34,12 +69,12 @@
       <form action="" method="POST" class="w-75 mx-auto">
            <input type="hidden" name="id" value="<?= $usuario['id'] ?? ''?>">
            <div class="form-group"> 
-                <label for="nome" class="form-label">Nome:</label>
+                <label required for="nome" class="form-label">Nome:</label>
                 <input type="text" name="nome" id="nome" class="form-control" value="<?= $usuario['nome'] ?? ''?>">
            </div>
 
            <div class="form-group">
-                <label for="email" class="form-label">E-mail:</label>
+                <label required for="email" class="form-label">E-mail:</label>
                 <input type="email" name="email" id="email" class="form-control" value="<?= $usuario['email'] ?? ''?>">
            </div>
 

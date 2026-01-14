@@ -27,3 +27,15 @@ function codificarSenha(string $senha): string
     // retorna o hash da senha
     return password_hash($senha, PASSWORD_DEFAULT);
 }
+
+//  Função que compara a senha digitada com a do banco
+function verificarSenha(string $senhaForm, string $senhaBanco): string
+{
+    // Se a senha digitada for a mesma, ela retorna TRUE e falamaos para ela manter a do banco (da no mesmo)
+    if(password_verify($senhaForm, $senhaBanco)){
+            return $senhaBanco;
+    // Acontece se a der FALSE (A senha for diferente da do banco e voce quiser mesmo trocar ela)    
+    }else{
+            return codificarSenha($senhaForm);
+    }
+}
