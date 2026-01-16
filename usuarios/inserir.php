@@ -4,6 +4,8 @@
      require_once BASE_PATH . "/src/utils.php";
      require_once BASE_PATH . "/src/usuario_crud.php";
 
+     exigirLogin();
+
      $erro = null;
 
      if ($_SERVER['REQUEST_METHOD'] === 'POST') {

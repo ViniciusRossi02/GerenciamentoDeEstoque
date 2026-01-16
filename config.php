@@ -8,3 +8,6 @@ define('BASE_URL', '/curso-php-crud');
 
 // Importando/Carregando o script de conexão e disponibilizando para todas as paginas que utilizam o config.php
 require_once BASE_PATH . '/src/banco.php';
+
+// <!-- SECTION 13 - PASSO 2 - adicionar require no config.php  -->
+require_once BASE_PATH . '/src/autenticacao.php';

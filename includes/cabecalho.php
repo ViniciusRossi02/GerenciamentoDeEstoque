@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../config.php';
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -17,15 +19,36 @@ require_once __DIR__ . '/../config.php';
 </head>
 
 <body>
+    <!--SECTION 13 - PASSO 3 - Acrescentendando elementos na barra de gerenciamento alem de estilizar o container   -->
     <div class="bg-primary text-white py-2">
-        <div class="container">
-            <a href="<?= BASE_URL ?>/usuarios/listar.php" class="btn btn-sm btn-outline-light">
-                <i class="bi bi-people"> Gerenciar Usuarios</i>
-            </a>
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <!-- SECTION 13 - PASSO 5 - fazer um codigo para mostrar os elementos apenas se o usuario estiver logado  -->
+                <?php if (usuarioEstaLogado()): ?>
+                    <a href="<?= BASE_URL ?>/usuarios/listar.php" class="btn btn-sm btn-outline-light">
+                        <i class="bi bi-people"> Gerenciar Usuarios</i>
+                    </a>
+                <?php endif; ?>
+            </div>
+
+            <!-- SECTION 13 - PASSO 6 - Condicionando para que se o usuario estiver logado mostra esse bloco de programação  -->
+            <div class="d-flex align-items-center">
+                <?php if (usuarioEstaLogado()): ?>
+                    <i class="bi bi-person-circle me-2"></i>
+                    <span class="me-3">Ola, pessoa</span>
+                    <a href="<?= BASE_URL ?>/logout.php" class="btn btn-sm btn-outline-light"> <i class="bi bi-box-arrow-right me-1"></i>Sair</a>
+                    <!-- CASO O USUARIO NAO ESTEJA LOGADO -->
+                <?php else: ?>
+                    <i class="bi bi-person-x me-2"></i>
+                    <span class="me-3">Você não esta logado!!</span>
+                <?php endif; ?>
+            </div>
         </div>
+
     </div>
 
-
+<!-- SECTION 13 - PASSO 7 - Condicionando para que se o usuario estiver logado mostra esse bloco de programação  -->
+    <?php if(usuarioEstaLogado()): ?>
     <header class="border-bottom border-primary-subtle bg-body">
         <div class="container">
             <div class="row align-items-center py-2 justify-content-between">
@@ -47,5 +70,6 @@ require_once __DIR__ . '/../config.php';
             </div>
         </div>
     </header>
+<?php endif; ?>
 
     <main class="container my-4">

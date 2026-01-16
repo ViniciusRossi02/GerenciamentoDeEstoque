@@ -3,6 +3,8 @@
     require_once __DIR__ ."/../config.php";
      $titulo = "Adicionar Produto |";
     require_once BASE_PATH ."/includes/cabecalho.php";
+
+    exigirLogin();
 ?>
 
 <section class=" mb-4 border rounded-3 p-4 border-primary-subtle">

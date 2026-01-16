@@ -1,7 +1,7 @@
  <?php
 
     require_once __DIR__ ."/config.php";
-
+    exigirLogin();
     require_once BASE_PATH ."/includes/cabecalho.php";
 ?>
 

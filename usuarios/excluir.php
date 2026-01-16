@@ -5,6 +5,8 @@
      require_once BASE_PATH . "/src/usuario_crud.php";
      require_once BASE_PATH . "/src/utils.php";
 
+     exigirLogin();
+
      //     SEC 12 - 3º PASSO - Pegar da URL o ID do usuario a ser excluido com o metodo GET e deixand seguro com a funcao sanitizar
      $id = sanitizar($_GET["id"], 'inteiro');
      $erro = null;
