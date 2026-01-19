@@ -35,7 +35,8 @@ require_once __DIR__ . '/../config.php';
             <div class="d-flex align-items-center">
                 <?php if (usuarioEstaLogado()): ?>
                     <i class="bi bi-person-circle me-2"></i>
-                    <span class="me-3">Ola, pessoa</span>
+                    <!-- // SECTION 14 - 11° PASSO - FAZER COM QUE APARECE O NOME DO INDIVIDUO LOGADO -->
+                    <span class="me-3">Ola, <?= $_SESSION['nome'] ?></span>
                     <a href="<?= BASE_URL ?>/logout.php" class="btn btn-sm btn-outline-light"> <i class="bi bi-box-arrow-right me-1"></i>Sair</a>
                     <!-- CASO O USUARIO NAO ESTEJA LOGADO -->
                 <?php else: ?>

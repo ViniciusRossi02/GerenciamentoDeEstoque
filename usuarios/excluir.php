@@ -11,6 +11,11 @@
      $id = sanitizar($_GET["id"], 'inteiro');
      $erro = null;
 
+     // SECTION 14 - 12° PASSO - IMPEDIR COM QUE O USUARIO LOGADO SE EXCLUA!!!
+     if ($id === $_SESSION['id']) {
+          $erro = $_SESSION['nome'] . ", você não pode excuir a si mesmo";
+     }
+
      //     SEC 12 - 4º PASSO - Impedir que algeum tente acessar a pagina excluir direto da URL sem informar o ID
      if (!$id) {
           header("Location: listar.php");
@@ -28,7 +33,7 @@
 
      //     SEC 12 - 8º PASSO - Verificar se existe um parametro na URl chamado confirmar-exclusao e se nao tem erros
 
-     if(isset($_GET['confirmar-exclusao']) && !$erro){
+     if (isset($_GET['confirmar-exclusao']) && !$erro) {
           try {
                // chamar a funcao de excluir usuario do arquivo de CRUD (cria-lo antes)
                excluirUsuario($conexao, $id);
@@ -46,21 +51,21 @@
 
  <section class=" mb-4 border rounded-3 p-4 border-primary-subtle">
       <h3 class="text-center"><i class="bi bi-trash3-fill"></i> Excluir Usuário</h3>
-     
+
       <!-- SEC 12 - 7º PASSO exibir o erro  -->
       <?php if ($erro): ?>
            <p class="alert alert-danger text-center"><?= $erro ?></p>
       <?php else: ?>
 
-      <div class="alert alert-danger w-50 text-center mx-auto">
-           <!-- SEC 12 - 6º PASSO Fazer aparecer o nome do usuario a ser exlcuido no HTML-->
-           <p>Deseja realmente exlucir o Usuário <b><?= $usuario['nome'] ?? '' ?></b> ?</p>
+           <div class="alert alert-danger w-50 text-center mx-auto">
+                <!-- SEC 12 - 6º PASSO Fazer aparecer o nome do usuario a ser exlcuido no HTML-->
+                <p>Deseja realmente exlucir o Usuário <b><?= $usuario['nome'] ?? '' ?></b> ?</p>
 
-           <!-- SEC 12 - 8º PASSO Programar LINK dinamico para excluir o usuário ao clicar no link-->
-           <a class="btn btn-secondary" href="listar.php"><i class="bi bi-x-circle"></i> Não</a>
+                <!-- SEC 12 - 8º PASSO Programar LINK dinamico para excluir o usuário ao clicar no link-->
+                <a class="btn btn-secondary" href="listar.php"><i class="bi bi-x-circle"></i> Não</a>
 
-           <a class="btn btn-danger" href="?id=<?= $usuario['id']?>&confirmar-exclusao"> Sim</a>
-      </div>
+                <a class="btn btn-danger" href="?id=<?= $usuario['id'] ?>&confirmar-exclusao"> Sim</a>
+           </div>
 
       <?php endif; ?>
 

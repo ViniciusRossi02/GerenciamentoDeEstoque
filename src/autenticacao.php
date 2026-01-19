@@ -39,3 +39,18 @@ function usuarioEstaLogado(): bool
     iniciarSessao();
     return isset($_SESSION['id']);
 }
+
+// SECTION 14 - 1° PASSO - FUNÇÃO PARA o login, recebe os dados da pessoa que esta logando
+function login(int $id, string $nome): void
+{
+    iniciarSessao();
+    $_SESSION['id'] = $id;
+    $_SESSION['nome'] = $nome;
+}
+
+function logout():void{
+    iniciarSessao();
+    session_destroy();
+    header("location:" .BASE_URL . "/login.php?logout");
+    exit;
+}
