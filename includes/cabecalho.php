@@ -50,7 +50,7 @@ require_once __DIR__ . '/../config.php';
 
 <!-- SECTION 13 - PASSO 7 - Condicionando para que se o usuario estiver logado mostra esse bloco de programação  -->
     <?php if(usuarioEstaLogado()): ?>
-    <header class="border-bottom border-primary-subtle bg-body">
+    <header class="sticky-top border-bottom border-primary-subtle bg-body">
         <div class="container">
             <div class="row align-items-center py-2 justify-content-between">
                 <div class="col-4">
