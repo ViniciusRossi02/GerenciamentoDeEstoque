@@ -20,3 +20,36 @@ function inserirFornecedor(PDO $conexao, string $nome):void
     $consulta->bindValue(":nome", $nome, PDO::PARAM_STR);
     $consulta->execute();
 }
+
+// SECTION 16 - 1° passo - CRIAR UMA FUNÇÃO PARA BUSCAR O FORNECEDOR POR ID RECEBIDO PELA URL
+// A funçõa pode retornar tanto um array de dados quanto nulo
+function buscarFornecedorPorId(PDO $conexao, int $id): ?array
+{
+    $sql = "SELECT * FROM fornecedores WHERE id = :id";
+    $consulta = $conexao->prepare($sql);
+    $consulta->bindValue(":id", $id, PDO::PARAM_INT);
+    $consulta->execute();
+    $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+    return $resultado ?: null;
+
+}
+
+// SECTION 16 - 6° passo - CRIAR UMA FUNÇÃO PARA ATUALIZAR OS FORNECEDORES
+function atualizarFornecedor(PDO $conexao, int $id, string $nome):void
+{
+    $sql = "UPDATE fornecedores SET nome = :nome WHERE id = :id";
+    $consulta = $conexao->prepare($sql);
+    $consulta->bindValue(":id", $id, PDO::PARAM_INT);
+    $consulta->bindValue(":nome", $nome, PDO::PARAM_STR);
+    $consulta->execute();
+    
+}
+
+// SECTION 16 - 7° passo - CRIAR FUNÇÃO PARA EXCLUIR FORNECEDOR
+function excluirFornecedor(PDO $conexao, int $id):void
+{
+    $sql = "DELETE FROM fornecedores WHERE id = :id";
+    $consulta = $conexao->prepare($sql);
+    $consulta->bindValue(":id", $id, PDO::PARAM_INT);
+    $consulta->execute();
+}

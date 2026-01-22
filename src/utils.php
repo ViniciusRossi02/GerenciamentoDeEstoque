@@ -12,11 +12,11 @@ function sanitizar(mixed $entrada, string $tipo = 'texto'): mixed
         case 'inteiro':
             return (INT )filter_var($entrada, FILTER_SANITIZE_NUMBER_INT);
         case 'email':
-                return filter_var($entrada, FILTER_SANITIZE_EMAIL);
+                return trim(filter_var($entrada, FILTER_SANITIZE_EMAIL));
         
         case 'texto':
             default:
-                return filter_var($entrada, FILTER_SANITIZE_SPECIAL_CHARS);
+                return trim(filter_var($entrada, FILTER_SANITIZE_SPECIAL_CHARS));
     }
 };
 

@@ -48,7 +48,7 @@
           <div class="form-group">
                 <!-- SECTION 15 - 15° PASSO - ISERIR O VALUE PARA MOSTRAR O NOME DO INDIVIDUO, CASO NAO HAJA, MOSTRA VAZIO-->
                <label for="nome" class="form-label">Nome:</label>
-               <input type="text" name="nome" id="nome" class="form-control" value="<?= $_POST['nome'] ?? '' ?>">
+               <input required type="text" name="nome" id="nome" class="form-control" value="<?= $_POST['nome'] ?? '' ?>">
           </div>
           <button class="btn btn-success my-4" type="submit">
                <i class="bi bi-check-circle "></i> Salvar
