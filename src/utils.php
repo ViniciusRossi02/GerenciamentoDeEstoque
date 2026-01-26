@@ -39,3 +39,16 @@ function verificarSenha(string $senhaForm, string $senhaBanco): string
             return codificarSenha($senhaForm);
     }
 }
+
+// <!--  SECTION 17 - 10° criar função para formatar data  -->
+//  esse ? antes da stringo significa que pode ser string ou pode ser NULL 
+function formatarData(?string $data):string{
+    return $data ? date("d/m/y", strtotime($data)) : '-';
+}
+
+// <!--  SECTION 17 - 11° criar função para formatar preço -->
+
+function formatarPreço(float $preco):string
+{
+    return "R$".number_format($preco,2,',','.');
+}
