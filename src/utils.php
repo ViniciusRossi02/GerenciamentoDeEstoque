@@ -6,11 +6,15 @@ function dump(mixed $dados):void
     var_dump($dados);
     echo "</prev>";
 }
+
+// SECTION 18  ADICIONAR SANITIZAÇÃO DE DECIMAL
 function sanitizar(mixed $entrada, string $tipo = 'texto'): mixed
 {
     switch($tipo){
         case 'inteiro':
-            return (INT )filter_var($entrada, FILTER_SANITIZE_NUMBER_INT);
+            return (int)filter_var($entrada, FILTER_SANITIZE_NUMBER_INT);
+        case 'decimal':
+            return (float) filter_var($entrada, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         case 'email':
                 return trim(filter_var($entrada, FILTER_SANITIZE_EMAIL));
         
