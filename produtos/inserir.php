@@ -49,6 +49,39 @@
           } else if ($produto['quantidade'] < 0) {
                $erros[] = "informe uma quantidade válida";
           }
+
+          // SECTION 19 - 2° PASSO - ERROS[] INSERIR PRODUTOS E SE TEM ALGUM DETALHES  -->
+          if(empty($erros)) {
+               try {
+                    // INSERIR PRODUTO (CERTEZA QUE VAI ACONTECER) / TRANSAÇÃO EM BANCO DE DADOS
+                    $conexao->beginTransaction();
+
+                    $produto_id = inserirProduto($conexao, $produto);
+
+                    // INSERIR DETALHE CASO TENHA  
+                    if($detalhes['peso'] || $detalhes['dimensoes'] || $detalhes['data_validade'] || $detalhes['codigo_barras']) {
+                         // ADICIONANDO O ID DO PRODUTO NO ARRAY DE DETALHES ANTES DE INSERIR O REGISTRO
+                         $detalhes['produto_id'] = $produto_id;
+                         inserirDetalhesDoProduto( $conexao, $detalhes); 
+                    }
+                    // COMMIT APLICA AS OPERAÇÕES DA TANSAÇÃO
+                    $conexao->commit();
+
+                    header('location:listar.php');
+
+               } catch (Throwable $e) {
+                    // ROLLBACK DESFAZ AS OPERAÇÕES DA TRANSAÇÃO
+                    $conexao->rollBack();
+                    // SECTION 19 - 3° PASSO - ERRO CASO O NUMERO SEJA O MESMO DE OUTRO CÓDIGO DE BARRAS -->
+                    if($e->getCode() === '23000'){
+                         $erros[] = "O código de barras já existe no sistema.";
+               
+                    }else{
+                         $erros[] = "Erro ao inserir produto: <br>" . $e->getMessage();
+                    }
+                    
+               }
+          }
      }
 
 
@@ -79,27 +112,27 @@
                 <legend>Produto</legend>
                 <div class="form-group mb-3">
                      <label for="nome" class="form-label">Nome:</label>
-                     <input value='<?= $_POST['nome']?? '' ?>' type="text" name="nome" id="nome" class="form-control">
+                     <input required value='<?= $_POST['nome']?? '' ?>' type="text" name="nome" id="nome" class="form-control">
                 </div>
 
                 <div class="form-group mb-3">
                      <label for="descricao" class="form-label">Descrição:</label>
-                     <textarea  class="form-control" id="descricao" name="descricao"><?= $_POST['nome']?? '' ?></textarea>
+                     <textarea required class="form-control" id="descricao" name="descricao"><?= $_POST['descricao']?? '' ?></textarea>
                 </div>
 
                 <div class="form-group mb-3">
                      <label for="preco" class="form-label">Preço:</label>
-                     <input value='<?= $_POST['preco']?? '' ?>' type="number" name="preco" id="preco" class="form-control" min="0" step="0.01">
+                     <input required value='<?= $_POST['preco']?? '' ?>' type="number" name="preco" id="preco" class="form-control" min="0" step="0.01">
                 </div>
 
                 <div class="form-group mb-3">
                      <label for="quantidade" class="form-label">Quantidade:</label>
-                     <input value='<?= $_POST['quantidade']?? '' ?>' type="number" name="quantidade" id="quantidade" class="form-control" min="0">
+                     <input required value='<?= $_POST['quantidade']?? '' ?>' type="number" name="quantidade" id="quantidade" class="form-control" min="0">
                 </div>
 
                 <div class="form-group mb-3">
                      <label for="fornecedor_id" class="form-label">Fornecedor:</label>
-                     <select name="fornecedor_id" id="fornecedor_id" class="form-select">
+                     <select required name="fornecedor_id" id="fornecedor_id" class="form-select">
 
                           <!-- // SECTION 18 - 2° PASSO - RENDERIZAR A LISTA DE PRODUTOS DE FORMA DINAMICA  -->
                           <option value=""></option>
