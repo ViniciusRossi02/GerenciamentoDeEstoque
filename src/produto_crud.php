@@ -65,3 +65,30 @@ function inserirDetalhesDoProduto(PDO $conexao, array $detalhes): void
 
     $consulta->execute();
 }
+
+// <!--  SECTION 20 1° PASSO - FUNÇÃO PARA BUSCAR PRODUTO PELO ID  -->
+
+function buscarProdutoPorId(PDO $conexao, int $id): ?array{
+    $sql = "SELECT 
+                produtos.id AS produto_id,
+                produtos.nome,
+                produtos.descricao,
+                produtos.preco,
+                produtos.quantidade, 
+                fornecedores.id AS fornecedor_id,
+                detalhes_produto.id AS detalhe_id,
+                detalhes_produto.data_validade,
+                detalhes_produto.peso,
+                detalhes_produto.dimensoes,
+                detalhes_produto.codigo_barras
+                FROM produtos
+                LEFT JOIN fornecedores ON produtos.fornecedor_id = fornecedores.id
+                LEFT JOIN detalhes_produto ON produtos.id = detalhes_produto.produto_id
+                WHERE produtos.id = :id";
+
+                $consulta = $conexao->prepare($sql);
+                $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+                $consulta->execute();
+                return $consulta->fetch(PDO::FETCH_ASSOC) ?: null;
+              
+}

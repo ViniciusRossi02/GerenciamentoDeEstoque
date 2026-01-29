@@ -109,8 +109,9 @@
                          <td><?= $produto['fornecedor'] ?></td>
                          <td><?= formatarPreço($produto['preco']) ?></td>
                          <td><?= formatarData($produto['data_validade']) ?></td>
-                         <td><a class="btn btn-warning btn-sm" href="editar.php"><i class="bi bi-pencil-square"></i> Editar</a></td>
-                         <td><a class="btn btn-danger btn-sm" href="excluir.php"><i class="bi bi-trash"></i> Excluir</a></td>
+                          <!--  SECTION 20 2° PASSO - FAZER APARECER O ID NA URL -->
+                         <td><a class="btn btn-warning btn-sm" href="editar.php?id=<?= $produto['id'] ?>"><i class="bi bi-pencil-square"></i> Editar</a></td>
+                         <td><a class="btn btn-danger btn-sm" href="excluir.php?id=<?= $produto['id'] ?>"><i class="bi bi-trash"></i> Excluir</a></td>
                     </tr>
                     <?php endforeach;?>
                </tbody>
