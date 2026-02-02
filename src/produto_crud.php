@@ -68,7 +68,8 @@ function inserirDetalhesDoProduto(PDO $conexao, array $detalhes): void
 
 // <!--  SECTION 20 1° PASSO - FUNÇÃO PARA BUSCAR PRODUTO PELO ID  -->
 
-function buscarProdutoPorId(PDO $conexao, int $id): ?array{
+function buscarProdutoPorId(PDO $conexao, int $id): ?array
+{
     $sql = "SELECT 
                 produtos.id AS produto_id,
                 produtos.nome,
@@ -86,9 +87,52 @@ function buscarProdutoPorId(PDO $conexao, int $id): ?array{
                 LEFT JOIN detalhes_produto ON produtos.id = detalhes_produto.produto_id
                 WHERE produtos.id = :id";
 
-                $consulta = $conexao->prepare($sql);
-                $consulta->bindValue(':id', $id, PDO::PARAM_INT);
-                $consulta->execute();
-                return $consulta->fetch(PDO::FETCH_ASSOC) ?: null;
-              
+    $consulta = $conexao->prepare($sql);
+    $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+    $consulta->execute();
+    return $consulta->fetch(PDO::FETCH_ASSOC) ?: null;
+}
+
+// <!--  SECTION 20 4° PASSO - função de atualizar produto  -->
+
+function atualizarproduto(PDO $conexao, array $produtoAtualiado): void
+{
+    $sql = "UPDATE produtos SET
+    nome = :nome,
+    descricao = :descricao,
+    preco = :preco,
+    quantidade = :quantidade,
+    fornecedor_id = :fornecedor_id
+    WHERE id = :id";
+
+    $consulta = $conexao->prepare($sql);
+    $consulta->bindValue(":id", $produtoAtualiado['id'], PDO::PARAM_INT);
+    $consulta->bindValue(":nome", $produtoAtualiado['nome'], PDO::PARAM_STR);
+    $consulta->bindValue(":descricao", $produtoAtualiado['descricao'], is_null($produtoAtualiado['descricao']) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+    $consulta->bindValue(":preco", $produtoAtualiado['preco'], PDO::PARAM_INT);
+    $consulta->bindValue(":quantidade", $produtoAtualiado['quantidade'], PDO::PARAM_INT);
+    $consulta->bindValue(":fornecedor_id", $produtoAtualiado['fornecedor_id'], PDO::PARAM_INT);
+    $consulta->execute();
+}
+
+// <!--  SECTION 21 5° PASSO - função de atualizar DETALHES do produto -->
+
+function atualizarDetalhesDoProduto(PDO $conexao, array $detalhes): void 
+{
+    $sql = "UPDATE detalhes_produto SET
+            peso = :peso,
+            dimensoes = :dimensoes,
+            codigo_barras = :codigo_barras,
+            data_validade = :data_validade
+            WHERE produto_id = :produto_id";
+
+    $consulta = $conexao->prepare($sql);
+    
+    $consulta->bindValue(":produto_id", $detalhes['produto_id'], PDO::PARAM_INT);
+    $consulta->bindValue(":peso", $detalhes['peso'], is_null($detalhes['peso']) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+    $consulta->bindValue(":dimensoes", $detalhes['dimensoes'], is_null($detalhes['dimensoes']) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+    $consulta->bindValue(":codigo_barras", $detalhes['codigo_barras'], is_null($detalhes['codigo_barras']) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+    $consulta->bindValue(":data_validade", $detalhes['data_validade'], is_null($detalhes['data_validade']) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+
+    $consulta->execute();
 }
