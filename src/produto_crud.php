@@ -136,3 +136,12 @@ function atualizarDetalhesDoProduto(PDO $conexao, array $detalhes): void
 
     $consulta->execute();
 }
+
+// SECTION 22 - 6° PASSO - FUNÇÃO DE EXCLUIR PRODUTO
+function excluirProduto(PDO $conexao, int $id):void
+{
+    $sql = "DELETE FROM produtos WHERE id = :id";
+    $consulta = $conexao->prepare($sql);
+    $consulta->bindValue(":id", $id, PDO::PARAM_INT);
+    $consulta->execute();
+}

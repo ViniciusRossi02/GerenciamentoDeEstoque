@@ -171,7 +171,7 @@
                      </select>
                 </div>
            </fieldset>
-
+ 
            <!-- Tabela de deatalhes do produto -->
            <fieldset class="mt-4">
                 <legend>Detalhes do Produto</legend>
