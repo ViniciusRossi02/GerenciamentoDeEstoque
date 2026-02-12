@@ -60,7 +60,7 @@
                          <td><?= $estoque['estoque'] ?></td>
                <!-- // SECTION 24 - 6° PASSO - LINKS PARA EDICAO E EXCLUSÃO -->  
                          <td><a class="btn btn-warning btn-sm" href="editar.php?loja_id=<?= $estoque['loja_id'] ?>&produto_id=<?= $estoque['produto_id'] ?>"><i class="bi bi-pencil-square"></i> Editar</a></td>
-                         <td><a class="btn btn-danger btn-sm" href="excluir.php?editar.php?loja_id=<?= $estoque['loja_id'] ?>&produto_id=<?= $estoque['produto_id'] ?>"><i class="bi bi-trash"></i> Excluir</a></td>
+                         <td><a class="btn btn-danger btn-sm" href="excluir.php?loja_id=<?= $estoque['loja_id'] ?>&produto_id=<?= $estoque['produto_id'] ?>"><i class="bi bi-trash"></i> Excluir</a></td>
                     </tr>
                     <?php endforeach; ?>
                </tbody>
