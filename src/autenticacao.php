@@ -9,7 +9,7 @@
 // Iniciar uma sessao caso nao esteja iniciada
 function iniciarSessao(): void
 {
-    // Se a sessap nao estiver ativa, iniciar a sessao
+    // Se a sessao nao estiver ativa, iniciar a sessao
     if(session_status() !== PHP_SESSION_ACTIVE){
         session_start();
     }

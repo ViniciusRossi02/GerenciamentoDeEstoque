@@ -56,3 +56,14 @@ function formatarPreço(float $preco):string
 {
     return "R$".number_format($preco,2,',','.');
 }
+
+
+
+function ultimaAtualização(): string
+{
+    // Configuração de fuso horário (timezone)
+
+    // retorna a data em formato DIA/MÊS/ANO HORA:MINUTOS
+    date_default_timezone_set("America/Sao_Paulo");
+    return date("d/m/Y H:i");
+}
