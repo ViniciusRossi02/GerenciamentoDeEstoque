@@ -24,3 +24,19 @@ function buscarProdutosPorLoja(PDO $conexao, int $loja_id): array
     return $consulta->fetchAll(PDO::FETCH_ASSOC);
     
 }
+
+// SECTION 28 - 1° PASSO -> CRIAR FUNÇÕES PARA PESQUISA DE DADOS DOS FORNECEDORES
+function buscarProdutosPorForncedor(PDO $conexao, int $fornecedor_id):array
+{
+    $sql = "SELECT 
+    id, nome, descricao, 
+    preco, quantidade, preco * quantidade AS total 
+    FROM produtos
+    WHERE fornecedor_id = :fornecedor_id
+    ORDER BY nome";
+    
+    $consulta = $conexao->prepare($sql);
+    $consulta->bindValue(":fornecedor_id", $fornecedor_id, PDO::PARAM_INT);
+    $consulta->execute();
+    return $consulta->fetchAll(PDO::FETCH_ASSOC);
+}
