@@ -4,7 +4,7 @@
 
 $servidor = '127.0.0.1';
 $usuario = 'root';
-$senha = 'Rossi123#';
+$senha = '12345';
 $banco = "fly_by_night_estoque";
 
 // Script de conexão
