@@ -40,3 +40,22 @@ function buscarProdutosPorForncedor(PDO $conexao, int $fornecedor_id):array
     $consulta->execute();
     return $consulta->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// SECTION 29 - 1° PASSO -> CRIAR FUNÇÕES PARA BUSCAR ESTOQUE POR PRODUTO
+
+function buscarEstoquePorProduto(PDO $conexao, int $produto_id):array
+{
+    $sql = "SELECT 
+                lojas.nome AS loja,
+                lojas_produtos.estoque, 
+                lojas_produtos.produto_id,
+                lojas_produtos.loja_id
+            FROM lojas_produtos
+            JOIN lojas ON lojas.id = lojas_produtos.loja_id 
+            WHERE lojas_produtos.produto_id = :produto_id
+            ORDER BY lojas.nome";
+    $consulta = $conexao->prepare($sql);
+    $consulta->bindValue(":produto_id", $produto_id, PDO::PARAM_INT);
+    $consulta->execute();
+    return $consulta->fetchAll(PDO::FETCH_ASSOC);
+}

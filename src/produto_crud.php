@@ -27,7 +27,8 @@ function buscarProdutos(PDO $conexao, string $busca = ''): array
 
     $consulta = $conexao->prepare($sql);
     $consulta->execute($parametros);
-    return $consulta->fetchAll(PDO::FETCH_ASSOC);
+     return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    
 }
 
 // SECTION 19 - INSERIR PRODUTOS E DETALHES DOS PRODUTOS (2 SESSÕES POR SEREM 2 TABELAS DIFERENTES)
