@@ -67,3 +67,15 @@ function ultimaAtualização(): string
     date_default_timezone_set("America/Sao_Paulo");
     return date("d/m/Y H:i");
 }
+
+function definirClasseEstoque(int $quantidade, int $limite): string 
+{
+    // Nível Crítico (quantidade até 1): vermelho
+    if($quantidade <= 1) return "table-danger";
+
+    // Nível de Atenção (quantidade até metade do limite): amarelo
+    if($quantidade <= ($limite / 2)) return "table-warning";
+
+    // Padrão (sem cor)
+    return "";
+}
